@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>12기 독서 · 시 읽기 — 고궁에서 자화상까지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#111;overflow:hidden}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{width:1920px;height:1080px;position:relative;transform-origin:center center;flex-shrink:0}
+#deck>section{position:absolute;inset:0;width:1920px;height:1080px;display:none;overflow:hidden}
+#deck>section.on{display:flex}
+#deck>section>aside{display:none}
+#bar{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;gap:16px;padding:10px;
+  font:14px 'Noto Sans KR',sans-serif;color:#ddd;background:rgba(0,0,0,.55);opacity:0;transition:opacity .2s}
+body:hover #bar,#bar:focus-within{opacity:1}
+#bar button{font:inherit;color:#fff;background:#333;border:0;border-radius:6px;padding:6px 12px;cursor:pointer}
+#notes{position:fixed;left:16px;right:16px;bottom:56px;max-height:40vh;overflow:auto;display:none;
+  background:rgba(250,246,238,.97);color:#2B2620;font:18px/1.6 'Noto Sans KR',sans-serif;padding:16px 20px;border-radius:10px}
+body.shownotes #notes{display:block}
+:root{
+  --paper:#F6F1E7; --paper2:#FBF8F1; --ink:#2B2620; --soft:#5E554A; --mute:#6D6357; --line:#DDD3C2;
+  --warm:#8A4B2F; --blue:#3C5A7A; --blue-soft:#E3EAF1; --card:#FFFDF8;
+  --night:#1E2430; --night-ink:#ECE6DA; --night-soft:#C9C1B4; --night-warm:#E0A786;
+}
+body{font-family:'Noto Sans KR',Arial,sans-serif;color:#2B2620}
+section{padding:128px;background:#F6F1E7;display:flex;flex-direction:column;box-sizing:border-box;color:#2B2620}
+section.dark{background:#1E2430;color:#ECE6DA}
+section.poemslide{padding:88px 128px;background:#FBF8F1}
+
+.eyebrow{font-size:26px;font-weight:700;color:#8A4B2F;letter-spacing:2px;margin-bottom:24px}
+section.dark .eyebrow{color:#E0A786}
+h1{font-family:'Nanum Myeongjo',Georgia,serif;font-size:96px;font-weight:800;line-height:1.25;color:#2B2620;margin-bottom:48px}
+h2{font-family:'Nanum Myeongjo',Georgia,serif;font-size:64px;font-weight:800;line-height:1.25;color:#2B2620;margin-bottom:48px}
+section.dark h1,section.dark h2{color:#ECE6DA}
+.lead{font-size:32px;line-height:1.6;color:#5E554A}
+section.dark .lead{color:#C9C1B4}
+.small{font-size:26px;line-height:1.5;color:#6D6357}
+section.dark .small{color:#C9C1B4}
+.spacer{flex:1}
+
+/* 시 화면 */
+.ptop{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #DDD3C2;padding-bottom:16px;margin-bottom:36px}
+.ptitle{font-family:'Nanum Myeongjo',Georgia,serif;font-size:44px;font-weight:800;line-height:1.2;color:#2B2620}
+.pmeta{font-size:26px;color:#6D6357}
+.verse{font-family:'Nanum Myeongjo',Georgia,serif;color:#2B2620}
+.verse .v44{font-size:44px;line-height:1.6;margin-bottom:32px}
+.verse .v32{font-size:32px;line-height:1.6;margin-bottom:24px}
+.verse .v24{font-size:24px;line-height:1.45;margin-bottom:18px}
+.verse .paste{color:#8A4B2F}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:120px}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:64px}
+.center{align-items:center}
+.narrow{width:1000px}
+
+/* 시인 */
+.poet{display:grid;grid-template-columns:400px 1fr;gap:88px;align-items:start}
+.portrait{width:400px;height:540px;object-fit:cover;border-radius:12px}
+.poster{width:540px;height:780px;object-fit:cover;border-radius:12px}
+.poet.wide{grid-template-columns:540px 1fr}
+.noimg{width:400px;height:540px;border-radius:12px;background:#E3EAF1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.noimg .han{font-family:'Nanum Myeongjo',Georgia,serif;font-size:160px;font-weight:800;color:#3C5A7A;line-height:1.2}
+.noimg .small{color:#3C5A7A}
+.cap{font-size:24px;color:#6D6357;margin-top:12px;width:400px;line-height:1.4}
+.tlrow{display:flex;gap:28px;padding:9px 0;border-bottom:1px solid #DDD3C2}
+.tlrow .yr{font-size:28px;font-weight:700;color:#8A4B2F;width:120px;flex-shrink:0}
+.tlrow .ev{font-size:28px;line-height:1.45;color:#2B2620}
+
+/* 질문 */
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.q{background:#FFFDF8;border-left:8px solid #3C5A7A;border-radius:12px;padding:28px 36px}
+.q .tag{font-size:24px;font-weight:700;color:#3C5A7A;margin-bottom:10px}
+.q .qt{font-size:32px;line-height:1.5;color:#2B2620}
+.q.talk{border-left:8px solid #8A4B2F}
+.q.talk .tag{color:#8A4B2F}
+.qwide{margin-top:32px}
+
+/* 함께 보기 */
+.four{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:28px;margin-bottom:40px}
+.yc{background:#FFFDF8;border-radius:12px;padding:28px 28px;border-top:6px solid #3C5A7A}
+.yc.kim{border-top:6px solid #8A4B2F}
+.yc .yr{font-family:'Nanum Myeongjo',Georgia,serif;font-size:64px;font-weight:800;color:#8A4B2F;line-height:1.1}
+.yc .nm{font-size:28px;font-weight:700;margin:8px 0 10px;color:#2B2620}
+.yc .ds{font-size:26px;line-height:1.5;color:#5E554A}
+
+/* 글쓰기 */
+.prompt{font-family:'Nanum Myeongjo',Georgia,serif;font-size:56px;font-weight:800;line-height:1.45;color:#ECE6DA;margin-bottom:56px}
+.steps{display:flex;gap:24px}
+.step{background:#2C3442;border-radius:12px;padding:24px 28px;flex:1}
+.step .n{font-size:26px;font-weight:700;color:#E0A786;margin-bottom:6px}
+.step .t{font-size:30px;line-height:1.45;color:#ECE6DA}
+
+/* 표 */
+.cmp{font-size:28px;color:#2B2620;width:100%}
+.cmp tr.head{background:#E3EAF1}
+
+/* 표지 장식 */
+.rule{width:160px;height:6px;background:#8A4B2F;margin-bottom:40px}
+
+</style></head>
+<body>
+<div id="stage"><div id="deck">
+<section id="cover" class="dark" data-transition="fade">
+<p class="eyebrow">린스쿨 12기 독서 · 시</p>
+<div class="rule"></div>
+<h1>나는 얼마큼 작으냐<br>— 부끄러움을 쓴 시인들</h1>
+<p class="lead">시인들은 자신의 작음과 부끄러움을 어떻게 마주했을까요?</p>
+<div class="spacer"></div>
+<p class="small">여는 시 김수영 · 1회차 윤동주</p>
+<aside>오늘은 헤더가 좋아하는 김수영의 시로 문을 열고, 20여 년 앞선 윤동주에게 거슬러 올라갑니다. 김수영의 시는 1965년 작으로 일제강점기 시가 아니라는 점을 먼저 짚어 주세요.</aside>
+</section>
+<section id="open-keyword">
+<h2 style="font-size:96px;font-style:normal;letter-spacing:0;text-align:center;text-transform:none;transform:translate(0, 219px)">"부끄럽다"</h2>
+<aside>모두 올린 뒤 겹치는 낱말을 짚어 줍니다. 이 낱말들은 윤동주까지 읽은 뒤 '세 시 함께 보기'에서 다시 봅니다.</aside>
+</section>
+<section id="kim-poet">
+<p class="eyebrow">여는 시 · 시인</p>
+<h2>김수영 (1921–1968)</h2>
+<div class="poet">
+<div>
+<img class="portrait" src="images/kim-suyoung.png" alt="턱을 괴고 앉은 김수영의 흑백 사진">
+<p class="cap">헤더 제공 사진</p>
+</div>
+<div>
+<div class="tlrow"><p class="yr">1921</p><p class="ev">서울에서 태어남. 일제강점기에 일본 도쿄로 유학</p></div>
+<div class="tlrow"><p class="yr">1945</p><p class="ev">광복 뒤 시를 쓰기 시작함</p></div>
+<div class="tlrow"><p class="yr">1950</p><p class="ev">한국전쟁 중 끌려갔다가 포로수용소 생활 — 오늘 시에 그 기억이 나옴</p></div>
+<div class="tlrow"><p class="yr">1960</p><p class="ev">4·19 뒤, 자유와 양심을 정면으로 쓰는 시인이 됨</p></div>
+<div class="tlrow"><p class="yr">1965</p><p class="ev">「어느 날 고궁을 나오면서」</p></div>
+<div class="tlrow"><p class="yr">1968</p><p class="ev">마지막 시 「풀」. 같은 해 6월 사고로 숨짐</p></div>
+<p class="small" style="margin-top:28px">일제강점기 시인이 아니라, 광복 20년 뒤의 시입니다.<br>오늘은 이 시로 문을 열고 20여 년 전의 윤동주에게 거슬러 갑니다.</p>
+</div>
+</div>
+<aside>사진은 헤더가 준 것입니다. 수업 안에서만 씁니다.</aside>
+</section>
+<section id="gogung" class="poemslide">
+<div class="ptop"><p class="ptitle">어느 날 고궁을 나오면서</p><p class="pmeta">김수영 · 1965</p></div>
+<div class="verse cols3">
+<div>
+<p class="v24">왜 나는 조그마한 일에만 분개하는가<br><br>저 왕궁(王宮) 대신에 왕궁(王宮)의 음탕 대신에<br>오십(五十) 원짜리 갈비가 기름덩어리만 나왔다고 분개하고<br>옹졸하게 분개하고 설렁탕집 돼지 같은 주인년한테 욕을 하고<br>옹졸하게 욕을 하고</p>
+<p class="v24">한 번 정정당당하게<br>붙잡혀간 소설가를 위해서<br>언론의 자유를 요구하고 월남(越南)파병에 반대하는<br>자유를 이행하지 못하고<br>이십(二十) 원을 받으러 세 번씩 네 번씩<br>찾아오는 야경꾼들만 증오하고 있는가</p>
+</div>
+<div>
+<p class="v24">옹졸한 나의 전통은 유구하고&nbsp;<br>이제 내 앞에 정서(情緖)로 가로놓여 있다<br>이를테면 이런 일이 있었다<br>부산에 포로수용소의 제사십야전병원(第四十野戰病院)에 있을 때<br>정보원이 너어스들과 스폰지를 만들고 거즈를<br>개키고 있는 나를 보고 포로경찰이 되지 않는다고<br>남자가 뭐 이런 일을 하고 있느냐고 놀린 일이 있었다<br>너어스들 옆에서</p>
+<p class="v24">지금도 내가 반항하고 있는 것은 이 스폰지 만들기와<br>거즈 접고 있는 일과 조금도 다름없다<br>개의 울음소리를 듣고 그 비명에 지고<br>머리에 피도 안 마른 애놈의 투정에 진다<br>떨어지는 은행나무잎도 내가 밟고 가는 가시밭</p>
+</div>
+<div>
+<p class="v24">아무래도 나는 비켜 서 있다 절정(絶頂) 위에는&nbsp;<br>서 있지 않고 암만해도 조금쯤 옆으로 비켜서 있다<br>그리고 조금쯤 옆에 서 있는 것이 조금쯤<br>비겁한 것이라고 알고 있다!</p>
+<p class="v24">그러니까 이렇게 옹졸하게 반항한다<br>이발쟁이에게<br>땅주인에게는 못하고 이발쟁이에게<br>구청직원에게는 못하고 동회직원에게도 못하고<br>야경꾼에게 이십(二十) 원 때문에 십(十) 원 때문에 일(一) 원 때문에<br>우습지 않으냐 일(一) 원 때문에</p>
+<p class="v24">모래야 나는 얼마큼 작으냐<br>바람아 먼지야 풀아 나는 얼마큼 작으냐<br>정말 얼마큼 작으냐……</p>
+</div>
+</div>
+<aside>본문은 헤더가 준 판본 이미지에서 옮겼습니다. 이미지에서 줄이 접힌 곳은 원래 행으로 이었습니다. 낱말: 옹졸하게(마음이 좁게), 야경꾼(밤에 동네를 돌며 지키는 사람), 동회(지금의 동 주민센터), 너어스(간호사), 절정(가장 높은 곳).</aside>
+</section>
+<section id="gogung-q">
+<p class="eyebrow">여는 시 · 함께 생각하기</p>
+<h2>나는 무엇에 화를 내는가</h2>
+<div class="qgrid">
+<div class="q"><p class="tag">읽기 ① 찾기</p><p class="qt">시인이 화를 내는 상대는 누구인가요? 화를 내지 못하는 상대는 누구인가요? 두 줄로 나눠 적어 보세요.</p></div>
+<div class="q"><p class="tag">읽기 ② 뜻 풀기</p><p class="qt">"조금쯤 옆으로 비켜 서 있다"는 건 어떤 모습일까요? 시인은 그 모습을 스스로 뭐라고 부르나요?</p></div>
+<div class="q"><p class="tag">읽기 ③ 견주기</p><p class="qt">마지막 연에서 시인은 모래, 바람, 먼지, 풀에게 묻습니다. 왜 하필 이렇게 작은 것들에게 물을까요?</p></div>
+<div class="q talk"><p class="tag">생각 나누기</p><p class="qt">큰 일에는 말하지 못하고 작은 일에만 화를 낸 적이 있나요?&nbsp;</p></div>
+</div>
+<aside>힌트. ① 갈비집 주인, 이발쟁이, 야경꾼, 동회직원에게는 화를 내고, 왕궁·언론 탄압·전쟁 같은 큰 일에는 맞서지 못한다. ② 비켜 서 있는 것은 조금쯤 비겁한 것이라고 스스로 안다. ③ 자기를 아주 작은 것들과 견주며 부끄러움을 고백한다. 다리 놓기: 이 시인은 자기의 작음을 부끄러워했습니다. 20여 년 전, 말을 빼앗긴 시대에 또 한 청년이 부끄러움을 시로 썼습니다.</aside>
+</section>
+<section id="drama">
+<div class="poet wide">
+<img class="poster" src="images/100days-poster.png" alt="드라마 「100일의 거짓말」 포스터" style="width:711px;height:1012px;transform:translate(-80px, -108px);box-sizing:border-box">
+<div>
+<p class="eyebrow" style="transform:translate(65px, 244px)">들어가며</p>
+<h2 style="transform:translate(65px, 244px)">「100일의 거짓말」</h2>
+<p class="lead" style="transform:translate(65px, 244px)">사진 속 옷차림, 기차역, 두 사람의 표정을 보세요.<br>언제쯤, 어떤 시대의 이야기일까요?</p>
+<div class="q talk qwide" style="transform:translate(65px, 244px)"><p class="tag">생각 나누기</p><p class="qt">그 시대를 살았던 청년이라면 무엇을 숨기고, 무엇을 끝까지 지키려 했을까요?</p></div>
+</div>
+</div>
+<aside>헤더가 넣은 드라마 포스터입니다. 드라마 소개는 헤더가 직접 해 주세요.</aside>
+</section>
+<section id="yun-poet">
+<p class="eyebrow">1회차 · 시인</p>
+<h2>윤동주 (1917–1945)</h2>
+<div class="poet">
+<div>
+<img class="portrait" src="images/yun-dongju.jpg" alt="1941년 연희전문학교 졸업 사진 속 윤동주">
+<p class="cap">1941년 연희전문 졸업 사진 · 퍼블릭 도메인 (위키미디어 공용)</p>
+</div>
+<div>
+<div class="tlrow"><p class="yr">1917</p><p class="ev">북간도 명동촌에서 태어남. 사촌 송몽규와 함께 자람</p></div>
+<div class="tlrow"><p class="yr">1938</p><p class="ev">서울 연희전문학교(지금의 연세대) 문과 입학</p></div>
+<div class="tlrow"><p class="yr">1939</p><p class="ev">「자화상」 — 22살</p></div>
+<div class="tlrow"><p class="yr">1941</p><p class="ev">「서시」 — 시집을 엮으려 했으나 내지 못함</p></div>
+<div class="tlrow"><p class="yr">1942</p><p class="ev">일본 유학, 도쿄에서 「쉽게 씌어진 시」</p></div>
+<div class="tlrow"><p class="yr">1943</p><p class="ev">독립운동 혐의로 체포</p></div>
+<div class="tlrow"><p class="yr">1945</p><p class="ev">2월 16일 후쿠오카 형무소에서 숨짐. 광복 여섯 달 전, 27살</p></div>
+<div class="tlrow"><p class="yr">1948</p><p class="ev">남은 원고로 『하늘과 바람과 별과 시』가 나옴</p></div>
+</div>
+</div>
+<aside>살아 있는 동안 시집을 한 권도 내지 못한 시인입니다. 오늘은 서시(1941) → 자화상(1939) → 쉽게 씌어진 시(1942) 순서로 읽습니다. 시집 맨 앞의 다짐에서 시작해, 그 다짐을 한 사람이 자기를 어떻게 들여다봤는지, 마지막에 자기에게 어떻게 손을 내밀었는지 따라갑니다.</aside>
+</section>
+<section id="seosi" class="poemslide">
+<div class="ptop"><p class="ptitle">서시</p><p class="pmeta">윤동주 · 1941. 11. 20.</p></div>
+<div class="verse narrow">
+<p class="v44">죽는 날까지 하늘을 우러러<br>한 점 부끄럼이 없기를,<br>잎새에 이는 바람에도<br>나는 괴로워했다.<br>별을 노래하는 마음으로<br>모든 죽어 가는 것을 사랑해야지<br>그리고 나한테 주어진 길을<br>걸어가야겠다.</p>
+<p class="v44">오늘 밤에도 별이 바람에 스치운다.</p>
+</div>
+<aside>낱말: 우러러(고개를 들어 높이 바라보며), 잎새(나뭇잎), 스치운다(스친다의 옛 말맛). '서시'는 책 머리의 시라는 뜻으로, 시집 맨 앞에 놓인 시입니다.</aside>
+</section>
+<section id="seosi-q">
+<p class="eyebrow">서시 · 함께 생각하기</p>
+<h2>나한테 주어진 길</h2>
+<div class="qgrid">
+<div class="q"><p class="tag">읽기 ① 찾기</p><p class="qt">'하늘', '바람', '별'은 각각 몇 번 나오나요? 시집 제목 『하늘과 바람과 별과 시』와 견주어 보세요.</p></div>
+<div class="q"><p class="tag">읽기 ② 뜻 풀기</p><p class="qt">나뭇잎이 살짝 흔들리는 바람에도 괴로워하는 사람은 어떤 사람일까요?</p></div>
+<div class="q"><p class="tag">읽기 ③ 견주기</p><p class="qt">앞부분은 "괴로워했다", 뒷부분은 "걸어가야겠다"입니다. 무엇이 바뀌었나요?</p></div>
+<div class="q talk"><p class="tag">생각 나누기 · 한스와 잇기</p><p class="qt">"나한테 주어진 길"과 한스가 걸은 신학교의 길은 같은 길일까요? 누가 준 길인지가 다르면 무게도 달라질까요?</p></div>
+</div>
+<aside>힌트. ③ 앞부분은 과거형 고백, 뒷부분은 앞으로의 다짐. '서시'는 시집 맨 앞의 시라서 오늘도 맨 앞에 읽습니다. 김수영의 마지막 연에도 '바람'과 '풀'이 나온다. 같은 바람을 두 시인이 어떻게 다르게 썼는지 짚어 볼 수 있다.</aside>
+</section>
+<section id="jahwasang" class="poemslide">
+<div class="ptop"><p class="ptitle">자화상</p><p class="pmeta">윤동주 · 1939. 9.</p></div>
+<div class="verse">
+<p class="v32">산모퉁이를 돌아 논가 외딴 우물을 홀로 찾아가선 가만히 들여다봅니다.</p>
+<p class="v32">우물 속에는 달이 밝고 구름이 흐르고 하늘이 펼치고 파아란 바람이 불고 가을이 있습니다.</p>
+<p class="v32">그리고 한 사나이가 있습니다.<br>어쩐지 그 사나이가 미워져 돌아갑니다.</p>
+<p class="v32">돌아가다 생각하니 그 사나이가 가엾어집니다.<br>도로 가 들여다보니 사나이는 그대로 있습니다.</p>
+<p class="v32">다시 그 사나이가 미워져 돌아갑니다.<br>돌아가다 생각하니 그 사나이가 그리워집니다.</p>
+<p class="v32">우물 속에는 달이 밝고 구름이 흐르고 하늘이 펼치고 파아란 바람이 불고 가을이 있고 추억처럼 사나이가 있습니다.</p>
+</div>
+<aside>낱말: 자화상(스스로 그린 자기 얼굴), 외딴(홀로 떨어진), 도로(다시, 되돌아). 본문은 헤더 판본과 띄어쓰기·표기를 대조해 주세요.</aside>
+</section>
+<section id="jahwasang-q">
+<p class="eyebrow">자화상 · 함께 생각하기</p>
+<h2>우물 속의 사나이</h2>
+<div class="qgrid">
+<div class="q"><p class="tag">읽기 ① 견주기</p><p class="qt">「서시」의 '나'는 하늘을 우러렀습니다. 「자화상」의 '나'는 어디를 들여다보나요? 거기 무엇이 있나요?</p></div>
+<div class="q"><p class="tag">읽기 ② 찾기</p><p class="qt">'나'는 사나이를 보며 마음이 몇 번 바뀌나요? 바뀌는 낱말을 차례로 적어 보세요.</p></div>
+<div class="q"><p class="tag">읽기 ③ 견주기</p><p class="qt">첫 연과 마지막 연은 거의 같습니다. 마지막 연에 무엇이 더해졌나요?</p></div>
+<div class="q talk"><p class="tag">생각 나누기</p><p class="qt">그 사나이는 누구일까요? 나 자신이 미웠다가 가엾었던 적이 있나요?</p></div>
+</div>
+<aside>힌트. ① 하늘(위, 바깥) → 우물(아래, 나 자신). 우물 속에도 하늘과 바람이 있고, 그 안에 사나이가 있다. 「자화상」은 「서시」보다 2년 먼저 쓴 시. ②미워짐 → 가엾어짐 → 미워짐 → 그리워짐. ③ "추억처럼 사나이가 있습니다." 미움이 사라진 게 아니라 추억으로 받아들여진다. 김수영의 '나는 얼마큼 작으냐'와 견주어 볼 수 있다.</aside>
+</section>
+<section id="swipge" class="poemslide">
+<div class="ptop"><p class="ptitle">쉽게 씌어진 시</p><p class="pmeta">윤동주 · 1942. 6. 3. · 도쿄</p></div>
+<div class="verse cols2">
+<div>
+<p class="v32">창밖에 밤비가 속살거려<br>육첩방은 남의 나라,</p>
+<p class="v32">시인이란 슬픈 천명인 줄 알면서도<br>한 줄 시를 적어 볼까,</p>
+<p class="v32">땀내와 사랑내 포근히 품긴<br>보내 주신 학비 봉투를 받아</p>
+<p class="v32">대학 노트를 끼고<br>늙은 교수의 강의 들으러 간다.</p>
+<p class="v32">생각해 보면 어린 때 동무를<br>하나, 둘, 죄다 잃어버리고</p>
+</div>
+<div>
+<p class="v32">나는 무얼 바라<br>나는 다만, 홀로 침전하는 것일까?</p>
+<p class="v32">인생은 살기 어렵다는데<br>시가 이렇게 쉽게 씌어지는 것은<br>부끄러운 일이다.</p>
+<p class="v32">육첩방은 남의 나라<br>창밖에 밤비가 속살거리는데,</p>
+<p class="v32">등불을 밝혀 어둠을 조금 내몰고,<br>시대처럼 올 아침을 기다리는 최후의 나,</p>
+<p class="v32">나는 나에게 작은 손을 내밀어<br>눈물과 위안으로 잡는 최초의 악수.</p>
+</div>
+</div>
+<aside>낱말: 육첩방(다다미 여섯 장 크기의 일본식 방), 속살거려(작은 소리로 소곤거려), 천명(하늘이 내린 운명), 침전(가라앉음). 윤동주가 남긴 시 가운데 가장 늦게 쓴 작품으로 알려져 있고, 1년 뒤 체포됩니다.</aside>
+</section>
+<section id="swipge-q">
+<p class="eyebrow">쉽게 씌어진 시 · 함께 생각하기</p>
+<h2>최후의 나, 최초의 악수</h2>
+<div class="qgrid">
+<div class="q"><p class="tag">읽기 ① 찾기</p><p class="qt">'나'는 지금 어디에 있고 무엇을 하며 지내나요? 시에서 근거를 찾아보세요.</p></div>
+<div class="q"><p class="tag">읽기 ② 뜻 풀기</p><p class="qt">시가 '쉽게' 써지는 게 왜 부끄러울까요? 바로 앞 줄 "인생은 살기 어렵다는데"와 이어 읽어 보세요.</p></div>
+<div class="q talk"><p class="tag">생각 나누기 · 한스와 잇기</p><p class="qt">한스도 아버지와 마을의 기대를 안고 먼 학교로 갔습니다. 학비 봉투를 받은 윤동주와 한스는 무엇이 같고 다를까요?</p></div>
+<div class="q talk"><p class="tag">생각 나누기</p><p class="qt">「자화상」에서는 나를 미워했는데, 여기서는 나에게 손을 내밉니다. 3년 사이에 무엇이 달라졌을까요?</p></div>
+</div>
+<aside>힌트. ① 다다미 여섯 장 방(일본 하숙방), 부모님이 보낸 학비, 대학 강의. ③ '최후의 나'(부끄러워만 하던 나)가 끝나고 나 자신과의 '최초의 악수'가 시작된다.</aside>
+</section>
+<section id="together">
+<p class="eyebrow">함께 보기 · 핵심 토론</p>
+<h2>부끄러움은 무엇을 남겼나</h2>
+<div class="four">
+<div class="yc" style="transform:translate(424px, 0)"><p class="yr">1941</p><p class="nm">서시</p><p class="ds">하늘 아래 부끄럼 없기를 다짐한다</p></div>
+<div class="yc" style="transform:translate(-423px, 0)"><p class="yr">1939</p><p class="nm">자화상</p><p class="ds">우물 속의 나를 미워하다 가엾어한다</p></div>
+<div class="yc"><p class="yr">1942</p><p class="nm">쉽게 씌어진 시</p><p class="ds">부끄러운 나에게 손을 내민다</p></div>
+<div class="yc kim"><p class="yr">1965</p><p class="nm">고궁을 나오면서</p><p class="ds">작은 일에만 화내는 나를 부끄러워한다</p></div>
+</div>
+<div class="q talk"><p class="tag">핵심 토론</p><p class="qt">부끄러움은 두 시인을 무너뜨렸을까요, 아니면 버티게 했을까요?&nbsp;<br>한스의 부끄러움(시험, 친구, 아버지)과 견주어 이야기해 보세요.</p></div>
+<aside>돌아보기: 처음에 채팅창에 올린 '부끄럽다' 낱말 세 개를 다시 봅니다. 오늘 시를 읽고 나니 바꾸거나 더하고 싶은 낱말이 있는지 묻습니다.</aside>
+</section>
+<section id="write1" class="dark">
+<p class="eyebrow">글쓰기 · 선택제 · 9분</p>
+<p class="prompt">오늘 밤 우물을 들여다본다면 거기 어떤 '나'가 있을까요?<br>그 나에게 손을 내밀며 건네는 말을 써 봅시다.</p>
+<div class="steps">
+<div class="step"><p class="n">①</p><p class="t">우물 속에 보이는 것 세 가지</p></div>
+<div class="step"><p class="n">②</p><p class="t">그 '나'를 보는 마음 — 미움, 가엾음, 그리움…</p></div>
+<div class="step"><p class="n">③</p><p class="t">나에게 건네는 첫 악수 한 문장</p></div>
+</div>
+<div class="spacer"></div>
+<p class="small">산문도, 8줄 안팎의 짧은 시도 좋습니다. 촉박하면 숙제로 이어 갑니다.</p>
+</section>
+</div></div>
+<div id="notes"></div>
+<div id="bar">
+<button id="prev" aria-label="이전">◀</button><span id="num"></span><button id="next" aria-label="다음">▶</button>
+<button id="nbtn">노트(N)</button><button id="fbtn">전체 화면(F)</button>
+</div>
+<script>
+const S=[...document.querySelectorAll('#deck>section')],deck=document.getElementById('deck');
+let i=0;
+function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080);deck.style.transform='scale('+k+')';}
+function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));
+ document.getElementById('num').textContent=(i+1)+' / '+S.length;
+ const a=S[i].querySelector('aside');document.getElementById('notes').textContent=a?a.textContent:'(노트 없음)';
+ history.replaceState(null,'','#'+(i+1));}
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{
+ if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go(i+1)}
+ else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(i-1)}
+ else if(e.key==='Home')go(0);else if(e.key==='End')go(S.length-1);
+ else if(e.key==='n'||e.key==='N')document.body.classList.toggle('shownotes');
+ else if(e.key==='f'||e.key==='F')full();});
+function full(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+document.getElementById('prev').onclick=()=>go(i-1);
+document.getElementById('next').onclick=()=>go(i+1);
+document.getElementById('nbtn').onclick=()=>document.body.classList.toggle('shownotes');
+document.getElementById('fbtn').onclick=full;
+let tx=null;addEventListener('touchstart',e=>tx=e.touches[0].clientX);
+addEventListener('touchend',e=>{if(tx==null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)go(i+(d<0?1:-1));tx=null;});
+fit();go((parseInt(location.hash.slice(1))||1)-1);
+</script>
+</body></html>
