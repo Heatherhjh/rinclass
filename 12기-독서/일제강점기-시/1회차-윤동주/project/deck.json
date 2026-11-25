@@ -1,0 +1,65 @@
+{
+  "v": 5,
+  "attachments": {},
+  "cover": "cover",
+  "createdOnFiles": {
+    "at": "2026-11-25T10:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "faces": {
+    "nanum-myeongjo": {
+      "family": "Nanum Myeongjo",
+      "href": "https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap"
+    },
+    "noto-sans-kr": {
+      "family": "Noto Sans KR",
+      "href": "https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
+    }
+  },
+  "format": {
+    "shared": [
+      "project/deck.css"
+    ],
+    "v": 1
+  },
+  "lists": "css",
+  "order": [
+    "cover",
+    "open-keyword",
+    "kim-poet",
+    "gogung",
+    "gogung-q",
+    "drama",
+    "yun-poet",
+    "seosi",
+    "seosi-q",
+    "jahwasang",
+    "jahwasang-q",
+    "swipge",
+    "swipge-q",
+    "together",
+    "write1"
+  ],
+  "sections": {
+    "s1": {
+      "description": "여는 시: 김수영 「어느 날 고궁을 나오면서」",
+      "start": "cover"
+    },
+    "s2": {
+      "description": "1회차: 윤동주의 서시, 자화상, 쉽게 씌어진 시를 차례로 읽는다",
+      "start": "yun-poet"
+    },
+    "s3": {
+      "description": "1회차 토론·글쓰기·마무리",
+      "start": "together"
+    },
+    "s4": {
+      "before": null,
+      "description": "2회차: 서정주 「자화상」과 두 자화상 견주기",
+      "seq": 0,
+      "start": null
+    }
+  },
+  "title": "12기 독서 · 시 읽기 — 고궁에서 자화상까지"
+}

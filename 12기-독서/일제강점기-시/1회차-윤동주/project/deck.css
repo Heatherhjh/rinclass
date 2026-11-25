@@ -1,0 +1,78 @@
+:root{
+  --paper:#F6F1E7; --paper2:#FBF8F1; --ink:#2B2620; --soft:#5E554A; --mute:#6D6357; --line:#DDD3C2;
+  --warm:#8A4B2F; --blue:#3C5A7A; --blue-soft:#E3EAF1; --card:#FFFDF8;
+  --night:#1E2430; --night-ink:#ECE6DA; --night-soft:#C9C1B4; --night-warm:#E0A786;
+}
+body{font-family:'Noto Sans KR',Arial,sans-serif;color:#2B2620}
+section{padding:128px;background:#F6F1E7;display:flex;flex-direction:column;box-sizing:border-box;color:#2B2620}
+section.dark{background:#1E2430;color:#ECE6DA}
+section.poemslide{padding:88px 128px;background:#FBF8F1}
+
+.eyebrow{font-size:26px;font-weight:700;color:#8A4B2F;letter-spacing:2px;margin-bottom:24px}
+section.dark .eyebrow{color:#E0A786}
+h1{font-family:'Nanum Myeongjo',Georgia,serif;font-size:96px;font-weight:800;line-height:1.25;color:#2B2620;margin-bottom:48px}
+h2{font-family:'Nanum Myeongjo',Georgia,serif;font-size:64px;font-weight:800;line-height:1.25;color:#2B2620;margin-bottom:48px}
+section.dark h1,section.dark h2{color:#ECE6DA}
+.lead{font-size:32px;line-height:1.6;color:#5E554A}
+section.dark .lead{color:#C9C1B4}
+.small{font-size:26px;line-height:1.5;color:#6D6357}
+section.dark .small{color:#C9C1B4}
+.spacer{flex:1}
+
+/* 시 화면 */
+.ptop{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #DDD3C2;padding-bottom:16px;margin-bottom:36px}
+.ptitle{font-family:'Nanum Myeongjo',Georgia,serif;font-size:44px;font-weight:800;line-height:1.2;color:#2B2620}
+.pmeta{font-size:26px;color:#6D6357}
+.verse{font-family:'Nanum Myeongjo',Georgia,serif;color:#2B2620}
+.verse .v44{font-size:44px;line-height:1.6;margin-bottom:32px}
+.verse .v32{font-size:32px;line-height:1.6;margin-bottom:24px}
+.verse .v24{font-size:24px;line-height:1.45;margin-bottom:18px}
+.verse .paste{color:#8A4B2F}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:120px}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:64px}
+.center{align-items:center}
+.narrow{width:1000px}
+
+/* 시인 */
+.poet{display:grid;grid-template-columns:400px 1fr;gap:88px;align-items:start}
+.portrait{width:400px;height:540px;object-fit:cover;border-radius:12px}
+.poster{width:540px;height:780px;object-fit:cover;border-radius:12px}
+.poet.wide{grid-template-columns:540px 1fr}
+.noimg{width:400px;height:540px;border-radius:12px;background:#E3EAF1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.noimg .han{font-family:'Nanum Myeongjo',Georgia,serif;font-size:160px;font-weight:800;color:#3C5A7A;line-height:1.2}
+.noimg .small{color:#3C5A7A}
+.cap{font-size:24px;color:#6D6357;margin-top:12px;width:400px;line-height:1.4}
+.tlrow{display:flex;gap:28px;padding:9px 0;border-bottom:1px solid #DDD3C2}
+.tlrow .yr{font-size:28px;font-weight:700;color:#8A4B2F;width:120px;flex-shrink:0}
+.tlrow .ev{font-size:28px;line-height:1.45;color:#2B2620}
+
+/* 질문 */
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.q{background:#FFFDF8;border-left:8px solid #3C5A7A;border-radius:12px;padding:28px 36px}
+.q .tag{font-size:24px;font-weight:700;color:#3C5A7A;margin-bottom:10px}
+.q .qt{font-size:32px;line-height:1.5;color:#2B2620}
+.q.talk{border-left:8px solid #8A4B2F}
+.q.talk .tag{color:#8A4B2F}
+.qwide{margin-top:32px}
+
+/* 함께 보기 */
+.four{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:28px;margin-bottom:40px}
+.yc{background:#FFFDF8;border-radius:12px;padding:28px 28px;border-top:6px solid #3C5A7A}
+.yc.kim{border-top:6px solid #8A4B2F}
+.yc .yr{font-family:'Nanum Myeongjo',Georgia,serif;font-size:64px;font-weight:800;color:#8A4B2F;line-height:1.1}
+.yc .nm{font-size:28px;font-weight:700;margin:8px 0 10px;color:#2B2620}
+.yc .ds{font-size:26px;line-height:1.5;color:#5E554A}
+
+/* 글쓰기 */
+.prompt{font-family:'Nanum Myeongjo',Georgia,serif;font-size:56px;font-weight:800;line-height:1.45;color:#ECE6DA;margin-bottom:56px}
+.steps{display:flex;gap:24px}
+.step{background:#2C3442;border-radius:12px;padding:24px 28px;flex:1}
+.step .n{font-size:26px;font-weight:700;color:#E0A786;margin-bottom:6px}
+.step .t{font-size:30px;line-height:1.45;color:#ECE6DA}
+
+/* 표 */
+.cmp{font-size:28px;color:#2B2620;width:100%}
+.cmp tr.head{background:#E3EAF1}
+
+/* 표지 장식 */
+.rule{width:160px;height:6px;background:#8A4B2F;margin-bottom:40px}
