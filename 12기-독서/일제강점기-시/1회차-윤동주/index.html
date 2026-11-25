@@ -320,6 +320,7 @@ document.getElementById('nbtn').onclick=()=>document.body.classList.toggle('show
 document.getElementById('fbtn').onclick=full;
 let tx=null;addEventListener('touchstart',e=>tx=e.touches[0].clientX);
 addEventListener('touchend',e=>{if(tx==null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)go(i+(d<0?1:-1));tx=null;});
+addEventListener("hashchange",()=>go((parseInt(location.hash.slice(1))||1)-1));
 fit();go((parseInt(location.hash.slice(1))||1)-1);
 </script>
 </body></html>
